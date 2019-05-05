@@ -25,14 +25,14 @@ class BlogController extends Controller
     	return view("blog.index", compact('posts', 'categories'));
     }
 
-    public function category($id)
+    public function category(Category $category)
     {
         $categories = Category::with('posts')->orderBy('title', 'asc')->get();
 
-    	$posts = Post::with('author')
+        $posts = $category->posts()
+                        ->with('author')
                         ->latestFirst()
-                        ->where('category_id', $id)
-    			->paginate(8);
+    			        ->paginate(8);
 
     	return view("blog.index", compact('posts', 'categories'));
     }
