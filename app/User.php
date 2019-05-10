@@ -5,6 +5,8 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use GrahamCampbell\Markdown\Facades\Markdown;
+
 
 class User extends Authenticatable
 {
@@ -40,6 +42,35 @@ class User extends Authenticatable
     public function posts()
     {
 
-        return $this->hasMany(Post::class);
+        return $this->hasMany(Post::class, 'author_id');
     }
+
+    public function getRouteKeyName()
+    {
+      return 'slug';
+    }
+
+    public function getBioHtmlAttribute($value)
+    {
+        return $this->bio ? Markdown::convertToHtml(e($this->bio)) : NULL;
+    }
+
+    // User Gravata
+    public function gravata()
+    {
+      $email = $this->email;
+      $default = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/User_icon-cp.svg/200px-User_icon-cp.svg.png";
+      $size = 40;
+
+      return "https://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
+    }
+	
+	public function getGravatarAttribute()
+{
+    $hash = md5(strtolower(trim($this->attributes['email'])));
+	$default = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/User_icon-cp.svg/200px-User_icon-cp.svg.png";
+    // return "http://www.gravatar.com/avatar/$hash";
+	return "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/User_icon-cp.svg/200px-User_icon-cp.svg.png";
+}
+
 }

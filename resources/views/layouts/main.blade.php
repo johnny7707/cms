@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>CMS | Content Management System</title>
-
-    
     <link href="https://fonts.googleapis.com/css?family=Kanit" rel="stylesheet" type='text/css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css">
     <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
@@ -22,15 +20,15 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="{{ url('/') }}"> Testing Site</a>
+              <a class="navbar-brand" href="{{ url('/') }}"> H.Johnny </a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="the-navbar-collapse">
               <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="{{ route('blog') }}">Blog</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
+                <li class="active"><a href="{{ route('blog') }}">หน้าแรก</a></li>
+                <li><a href="#">เกี่ยวกับ</a></li>
+                <li><a href="#">ติดต่อสอบถาม</a></li>
               </ul>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container -->

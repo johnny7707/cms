@@ -2,7 +2,7 @@
                 <aside class="right-sidebar">
                     <div class="search-widget">
                         <div class="input-group">
-                          <input type="text" class="form-control input-lg" placeholder="Search for...">
+                          <input type="text" class="form-control input-lg" placeholder=" ค้นหา...">
                           <span class="input-group-btn">
                             <button class="btn btn-lg btn-default" type="button">
                                 <i class="fa fa-search"></i>
@@ -13,7 +13,7 @@
 
                     <div class="widget">
                         <div class="widget-heading">
-                            <h4>Categories</h4>
+                            <h4>หมวดหมู่</h4>
                         </div>
                         <div class="widget-body">
                             <ul class="categories">
@@ -29,49 +29,27 @@
 
                     <div class="widget">
                         <div class="widget-heading">
-                            <h4>Popular Posts</h4>
+                            <h4>ข้อความที่นิยม</h4>
                         </div>
                         <div class="widget-body">
                             <ul class="popular-posts">
-                                <li>
+                              @foreach ($popularPosts as $post)
+                              <li>
+                                  @if($post->image_thumb_url)
                                     <div class="post-image">
-                                        <a href="#">
-                                            <img src="/img/Post_Image_5_thumb.jpg" />
+                                        <a href="{{ route('blog.show', $post->slug) }}">
+                                            <img src="{{ $post->image_thumb_url }}" />
                                         </a>
                                     </div>
-                                    <div class="post-body">
-                                        <h6><a href="#">Blog Post #5</a></h6>
-                                        <div class="post-meta">
-                                            <span>36 minutes ago</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="post-image">
-                                        <a href="#">
-                                            <img src="/img/Post_Image_4_thumb.jpg" />
-                                        </a>
-                                    </div>
-                                    <div class="post-body">
-                                        <h6><a href="#">Blog Post #4</a></h6>
-                                        <div class="post-meta">
-                                            <span>36 minutes ago</span>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="post-image">
-                                        <a href="#">
-                                            <img src="/img/Post_Image_3_thumb.jpg" />
-                                        </a>
-                                    </div>
-                                    <div class="post-body">
-                                        <h6><a href="#">Blog Post #3</a></h6>
-                                        <div class="post-meta">
-                                            <span>36 minutes ago</span>
-                                        </div>
-                                    </div>
-                                </li>
+                                  @endif
+                                  <div class="post-body">
+                                      <h6><a href="{{ route('blog.show', $post->slug) }}"> {{ $post->title }} </a></h6>
+                                      <div class="post-meta">
+                                          <span> {{ $post->date }} </span>
+                                      </div>
+                                  </div>
+                              </li>
+                               @endforeach
                             </ul>
                         </div>
                     </div>
@@ -95,4 +73,3 @@
                     </div>
                 </aside>
              </div>
-         
