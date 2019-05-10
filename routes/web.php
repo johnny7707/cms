@@ -26,3 +26,16 @@ Route::get('/category/{category}', [
     'as'   => 'category'
 ]);
 
+Route::get('/author/{author}', [
+    'uses' => 'BlogController@author',
+    'as'   => 'author'
+]);
+
+
+Auth::routes();
+
+Route::get('dashboard', 'Backend\HomeController@index')->name('dashboard');
+
+Route::get('logout', 'Auth\LoginController@logout')->name('/login');
+
+Route::resource('/backend/blog', 'Backend\BlogController');
