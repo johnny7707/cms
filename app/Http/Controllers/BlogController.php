@@ -2,56 +2,77 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
-use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use Categories;
+//use Categories;
+use App\User;
+use App\Post;
+use App\Category;
+// use App\Views\Composers\NavigationComposer;
+// use Illuminate\View\View;
 
 
 class BlogController extends Controller
 {
+    public function getAbout(){
+        return view('about');
+    }
+
+    public function getContact(){
+        return view('blog.contact');
+    }
 
     //	protected $limit =5;
 
     public function index()
     {
-        $categories = Category::with('posts')->orderBy('title', 'asc')->get();
 
     	$posts = Post::with('author')
-    					->latestFirst()
-    					->paginate(8);
+              					->latestFirst()
+              					->paginate(8);
 
-    	return view("blog.index", compact('posts', 'categories'));
+    	return view("blog.index", compact('posts'));
     }
 
-    public function category($id)
+    public function category(Category $category)
     {
-        $categories = Category::with('posts')->orderBy('title', 'asc')->get();
+        $categoryName = $category->title;
 
-    	$posts = Post::with('author')
-                        ->latestFirst()
-                        ->where('category_id', $id)
-    			->paginate(8);
+    	   $posts =  $category->posts()
+                            ->with('author')
+                            ->latestFirst()
+        			              ->paginate(8);
 
-    	return view("blog.index", compact('posts', 'categories'));
+    	return view("blog.index", compact('posts', 'categoryName'));
     }
 
     public function show(Post $post)
     {
-        //	$post = Post::findOrfail($id);
-    	
-    	//return view("blog.show", compact('post'));
-        
-        $categories = Category::with(['posts' => function($query) {
-         $query->published();            
-        }])->orderBy('title', 'asc')->get();
- 
-    return view("blog.show", compact('post', 'categories'));
+      // update posts set view_count = view_count + 1 where id=?
+      #1
+      // $viewCount = $post->view_count + 1;
+      // $post->update(['view_count' => $viewCount]);
+
+      #2
+      $post->increment('view_count');
+
+    return view("blog.show", compact('post'));
 
     }
 
-    
+    public function author(User $author)
+    {
+      $authorName = $author->name;
+
+       $posts =  $author->posts()
+                        ->with('category')
+                        ->latestFirst()
+                        ->paginate(8);
+
+    return view("blog.index", compact('posts', 'authorName'));
+
+    }
+
 
 
 
